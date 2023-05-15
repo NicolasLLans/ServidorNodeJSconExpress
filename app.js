@@ -3,6 +3,7 @@ const app = express();
 
 const { infoCursos } = require('./cursos.js');
 
+
 //Routing
 
 app.get('/',(req,res)=>{
