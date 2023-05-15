@@ -17,7 +17,7 @@ app.get('/api/cursos/programacion', (req,res)=>{
       res.send(JSON.stringify(infoCursos.programacion));
 })
 
-//Cursos de programación
+//Cursos de programación:
 
 app.get('/api/cursos/programacion/:lenguaje', (req,res)=>{
       const lenguaje = req.params.lenguaje;
