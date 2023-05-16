@@ -14,7 +14,7 @@ routerProgramacion.get('/:lenguaje', (req,res)=>{
       if(resultados.length === 0){
             return res.status(404).send(`No se encontraron cursos de: ${lenguaje}`);
       }
-      res.send(JSON.stringify(resultados));
+      res.send(resultados);
 });
 routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
       const lenguaje = req.params.lenguaje;
@@ -24,13 +24,13 @@ routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
       if(resultados.length === 0){
             return res.status(404).send(`No se encontraron cursos de ${lenguaje} de nivel ${nivel}`);
       }
-      res.send(JSON.stringify(resultados));
+      res.send(resultados);
 });
 
 routerProgramacion.post('/',(req,res)=>{
       let cursoNuevo = req.body;
       programacion.push(cursoNuevo);
-      res.send(JSON.stringify(programacion));
+      res.status(201).send(programacion);
 });
 routerProgramacion.put('/:id',(req,res) =>{
       const cursoActualizado = req.body;
@@ -41,7 +41,7 @@ routerProgramacion.put('/:id',(req,res) =>{
       if(indice >= 0){
             programacion[indice] = cursoActualizado;
       }
-      res.send(JSON.stringify(programacion));
+      res.status(202).send(programacion);
 });
 routerProgramacion.patch('/:id',(req,res) =>{
       const infoActualizada = req.body;
@@ -53,7 +53,7 @@ routerProgramacion.patch('/:id',(req,res) =>{
             const cursoAModificar = programacion[indice];
             Object.assign(cursoAModificar,infoActualizada);
       }
-      res.send(JSON.stringify(programacion));
+      res.status(202).send(programacion);
 });
 routerProgramacion.delete('/:id',(req,res) =>{
       const id = req.params.id;
@@ -62,7 +62,7 @@ routerProgramacion.delete('/:id',(req,res) =>{
       if(indice >= 0){
             programacion.splice(indice,1);
       }
-      res.send(JSON.stringify(programacion));
+      res.status(204).send(programacion);
 });
 
 
