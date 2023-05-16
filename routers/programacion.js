@@ -4,6 +4,9 @@ const {programacion} = require('../datos/cursos.js').infoCursos;
 
 const routerProgramacion = express.Router();
 
+//middleware ## Se ejecutam DESPUÉS de recibir una solicitud ## ANTES de enviar una respuesta.
+routerProgramacion.use(express.json());
+
 //Cursos de programación:
 routerProgramacion.get('/:lenguaje', (req,res)=>{
       const lenguaje = req.params.lenguaje;
@@ -12,7 +15,7 @@ routerProgramacion.get('/:lenguaje', (req,res)=>{
             return res.status(404).send(`No se encontraron cursos de: ${lenguaje}`);
       }
       res.send(JSON.stringify(resultados));
-})
+});
 routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
       const lenguaje = req.params.lenguaje;
       const nivel = req.params.nivel;
@@ -22,7 +25,45 @@ routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
             return res.status(404).send(`No se encontraron cursos de ${lenguaje} de nivel ${nivel}`);
       }
       res.send(JSON.stringify(resultados));
-})
+});
+
+routerProgramacion.post('/',(req,res)=>{
+      let cursoNuevo = req.body;
+      programacion.push(cursoNuevo);
+      res.send(JSON.stringify(programacion));
+});
+routerProgramacion.put('/:id',(req,res) =>{
+      const cursoActualizado = req.body;
+      const id = req.params.id;
+
+      const indice = programacion.findIndex(curso => curso.id == id);
+
+      if(indice >= 0){
+            programacion[indice] = cursoActualizado;
+      }
+      res.send(JSON.stringify(programacion));
+});
+routerProgramacion.patch('/:id',(req,res) =>{
+      const infoActualizada = req.body;
+      const id = req.params.id;
+
+      const indice = programacion.findIndex(curso => curso.id == id);
+
+      if(indice >= 0){
+            const cursoAModificar = programacion[indice];
+            Object.assign(cursoAModificar,infoActualizada);
+      }
+      res.send(JSON.stringify(programacion));
+});
+routerProgramacion.delete('/:id',(req,res) =>{
+      const id = req.params.id;
+      const indice = programacion.findIndex(curso => curso.id == id);
+
+      if(indice >= 0){
+            programacion.splice(indice,1);
+      }
+      res.send(JSON.stringify(programacion));
+});
 
 
 module.exports.routerProgramacion = routerProgramacion;
