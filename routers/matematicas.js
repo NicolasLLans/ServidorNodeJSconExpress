@@ -11,10 +11,10 @@ routerMatematicas.get('/:tema',(req,res)=>{
       if(resultados.length === 0){
             return res.status(404).send(`No se encontraron cursos de ${tema}`);
       }
-      res.send(JSON.stringify(resultados));
+      res.json(resultados);
 })
 routerMatematicas.get('/', (req,res)=>{
-      res.send(matematicas);
+      res.json(matematicas);
 })
 
 module.exports.routerMatematicas = routerMatematicas;

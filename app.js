@@ -19,10 +19,6 @@ app.get('/api/cursos',(req,res)=>{
       res.send(JSON.stringify(infoCursos));
 });
 
-routerProgramacion.get('/', (req,res)=>{
-      res.send(JSON.stringify(infoCursos.programacion));
-})
-
 
 const PUERTO = process.env.PORT || 3000;
 

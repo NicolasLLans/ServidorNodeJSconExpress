@@ -7,6 +7,10 @@ const routerProgramacion = express.Router();
 //middleware ## Se ejecutam DESPUÉS de recibir una solicitud ## ANTES de enviar una respuesta.
 routerProgramacion.use(express.json());
 
+routerProgramacion.get('/', (req,res)=>{
+      res.json(programacion);
+})
+
 //Cursos de programación:
 routerProgramacion.get('/:lenguaje', (req,res)=>{
       const lenguaje = req.params.lenguaje;
@@ -14,7 +18,7 @@ routerProgramacion.get('/:lenguaje', (req,res)=>{
       if(resultados.length === 0){
             return res.status(404).send(`No se encontraron cursos de: ${lenguaje}`);
       }
-      res.send(resultados);
+      res.json(resultados);
 });
 routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
       const lenguaje = req.params.lenguaje;
@@ -22,15 +26,15 @@ routerProgramacion.get('/:lenguaje/:nivel', (req,res) => {
 
       const resultados = programacion.filter(curso => curso.lenguaje === lenguaje && curso.nivel === nivel);
       if(resultados.length === 0){
-            return res.status(404).send(`No se encontraron cursos de ${lenguaje} de nivel ${nivel}`);
+            return res.status(204).send(`No se encontraron cursos de ${lenguaje} de nivel ${nivel}`);
       }
-      res.send(resultados);
+      res.json(resultados);
 });
 
 routerProgramacion.post('/',(req,res)=>{
       let cursoNuevo = req.body;
       programacion.push(cursoNuevo);
-      res.status(201).send(programacion);
+      res.status(201).json(programacion);
 });
 routerProgramacion.put('/:id',(req,res) =>{
       const cursoActualizado = req.body;
@@ -41,7 +45,7 @@ routerProgramacion.put('/:id',(req,res) =>{
       if(indice >= 0){
             programacion[indice] = cursoActualizado;
       }
-      res.status(202).send(programacion);
+      res.status(202).json(programacion);
 });
 routerProgramacion.patch('/:id',(req,res) =>{
       const infoActualizada = req.body;
@@ -53,7 +57,7 @@ routerProgramacion.patch('/:id',(req,res) =>{
             const cursoAModificar = programacion[indice];
             Object.assign(cursoAModificar,infoActualizada);
       }
-      res.status(202).send(programacion);
+      res.status(202).json(programacion);
 });
 routerProgramacion.delete('/:id',(req,res) =>{
       const id = req.params.id;
@@ -62,7 +66,7 @@ routerProgramacion.delete('/:id',(req,res) =>{
       if(indice >= 0){
             programacion.splice(indice,1);
       }
-      res.status(204).send(programacion);
+      res.status(204).json(programacion);
 });
 
 
